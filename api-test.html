@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>API Test</title>
+
+</head>
+
+<body>
+
+  <h2>Apps Script API Test</h2>
+
+  <input
+    id="userId"
+    placeholder="User ID"
+  >
+
+  <br><br>
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+  >
+
+  <br><br>
+
+  <button onclick="testLogin()">
+    Test Login
+  </button>
+
+  <pre id="output"></pre>
+
+
+  <script>
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbx9qbAD3AR4UP9LSSsoPNc6EmmT7g_7zbSJdMYgMzSetqMG871gRF0z7xSMKJnEtIAnPA/exec";
+
+
+    async function testLogin() {
+
+      const output =
+        document.getElementById(
+          "output"
+        );
+
+
+      output.textContent =
+        "Testing...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+
+              method:
+                "POST",
+
+              body:
+                JSON.stringify({
+
+                  action:
+                    "login",
+
+                  userId:
+                    document
+                      .getElementById(
+                        "userId"
+                      )
+                      .value,
+
+                  password:
+                    document
+                      .getElementById(
+                        "password"
+                      )
+                      .value
+
+                })
+
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        output.textContent =
+          JSON.stringify(
+            result,
+            null,
+            2
+          );
+
+      }
+
+      catch (err) {
+
+        output.textContent =
+          "ERROR:\n" +
+          err.message;
+
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
